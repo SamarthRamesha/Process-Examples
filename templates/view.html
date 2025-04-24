@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Submissions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>All Submissions</h2>
+    {% for srn, entries in data.items() %}
+        <h3>{{ srn }}</h3>
+        <table>
+            <tr>
+                <th>Process</th>
+                <th>Material</th>
+                <th>Product</th>
+            </tr>
+            {% for entry in entries %}
+            <tr>
+                <td>{{ entry.process }}</td>
+                <td>{{ entry.material }}</td>
+                <td>{{ entry.product }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+    {% endfor %}
+</body>
+</html>
