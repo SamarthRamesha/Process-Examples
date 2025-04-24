@@ -2,8 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forming Processes Submission</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+        table { width: 100%; border-spacing: 10px; }
+        th, td { text-align: left; padding: 6px; }
+        input { width: 100%; padding: 6px; }
+        .error { color: red; }
+    </style>
 </head>
 <body>
     <h2>Forming Process Examples</h2>
@@ -11,7 +19,7 @@
         <p class="error">{{ message }}</p>
     {% endif %}
     <form method="POST">
-        <label for="srn">SRN:</label>
+        <label for="srn">SRN:</label><br>
         <input type="text" id="srn" name="srn" required><br><br>
 
         <table>
