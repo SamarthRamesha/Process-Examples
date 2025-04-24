@@ -1,21 +1,27 @@
 import json
+import os
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-# Path to the JSON file where the data is stored
 DATA_FILE = 'data.json'
 
 # Function to read data from the JSON file
 def read_data():
     try:
+        if not os.path.exists(DATA_FILE):
+            print(f"Warning: {DATA_FILE} not found, initializing empty list.")
+            return []  # If the file doesn't exist, return an empty list
         with open(DATA_FILE, 'r') as f:
             return json.load(f)
     except FileNotFoundError:
+        print(f"FileNotFoundError: {DATA_FILE} not found.")
         return []
     except json.JSONDecodeError:
-        # If there is an issue with the JSON format, return an empty list
-        print("Error: data.json is empty or has invalid JSON.")
+        print("Error: The data file is corrupted or empty.")
+        return []
+    except Exception as e:
+        print(f"Unexpected error while reading data: {e}")
         return []
 
 # Function to write data to the JSON file
@@ -31,21 +37,19 @@ def write_data(data):
 def index():
     if request.method == "POST":
         try:
-            # Get the SRN and the rest of the form data
             srn = request.form['srn']
             materials = [request.form[f'material{i}'] for i in range(7)]
             products = [request.form[f'product{i}'] for i in range(7)]
             
-            # Read the existing data from the JSON file
+            # Read existing data
             data = read_data()
 
-            # Check if the submitted SRN already exists
-            for entry in data:
-                if entry['srn'] == srn:
-                    # If SRN exists, show an error message and re-render the form
-                    return render_template('form.html', message="This SRN has already been entered. Please enter new data.")
+            # Check for duplicate SRN
+            if any(entry['srn'] == srn for entry in data):
+                print(f"Duplicate SRN: {srn}")
+                return render_template('form.html', message="This SRN has already been entered. Please enter new data.")
 
-            # If the SRN is unique, append the new entry
+            # Append the new entry
             new_entry = {
                 'srn': srn,
                 'processes': [{'process': process, 'material': material, 'product': product} for process, material, product in zip(
@@ -56,8 +60,6 @@ def index():
             }
 
             data.append(new_entry)
-
-            # Write the updated data back to the JSON file
             write_data(data)
 
             return render_template('form.html', message="Data submitted successfully!")
@@ -71,11 +73,11 @@ def index():
 @app.route("/view")
 def view():
     try:
-        # Read the data from the JSON file
+        # Read the data to display
         data = read_data()
         return render_template('view.html', data=data)
     except Exception as e:
-        print(f"Error reading data for viewing: {e}")
+        print(f"Error while reading data for viewing: {e}")
         return render_template('view.html', message="An error occurred while fetching the data.")
 
 if __name__ == "__main__":
