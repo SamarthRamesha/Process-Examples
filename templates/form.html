@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forming Processes Submission</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Forming Process Examples</h2>
+    {% if message %}
+        <p class="error">{{ message }}</p>
+    {% endif %}
+    <form method="POST">
+        <label for="srn">SRN:</label>
+        <input type="text" id="srn" name="srn" required><br><br>
+
+        <table>
+            <tr>
+                <th>Forming Process</th>
+                <th>Material</th>
+                <th>Product</th>
+            </tr>
+            {% set processes = [
+                'Rolling', 'Drop Forging', 'Press Forging', 'Upset Forging',
+                'Extrusion', 'Wire Drawing', 'Sheet Drawing'
+            ] %}
+            {% for i in range(7) %}
+            <tr>
+                <td>{{ processes[i] }}</td>
+                <td><input type="text" name="material{{ i }}" required></td>
+                <td><input type="text" name="product{{ i }}" required></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
