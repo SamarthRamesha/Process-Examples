@@ -11,7 +11,7 @@ def read_data():
     try:
         if not os.path.exists(DATA_FILE):
             print(f"Warning: {DATA_FILE} not found, initializing empty list.")
-            return []  # If the file doesn't exist, return an empty list
+            return []
         with open(DATA_FILE, 'r') as f:
             return json.load(f)
     except FileNotFoundError:
@@ -23,7 +23,7 @@ def read_data():
     except Exception as e:
         import traceback
         traceback.print_exc()
-        return render_template('form.html', message="An error occurred during data submission. Please try again.")
+        return []
 
 # Function to write data to the JSON file
 def write_data(data):
@@ -74,9 +74,24 @@ def index():
 @app.route("/view")
 def view():
     try:
-        # Read the data to display
+        # Read the data
         data = read_data()
-        return render_template('view.html', data=data)
+        
+        # Flatten the structure to pass to the template
+        # This makes it easier to display as rows per SRN
+        structured_data = []
+        for entry in data:
+            srn = entry['srn']
+            for process_entry in entry['processes']:
+                structured_data.append({
+                    'srn': srn,
+                    'process': process_entry['process'],
+                    'material': process_entry['material'],
+                    'product': process_entry['product']
+                })
+
+        return render_template('view.html', data=structured_data)
+
     except Exception as e:
         print(f"Error while reading data for viewing: {e}")
         return render_template('view.html', message="An error occurred while fetching the data.")
