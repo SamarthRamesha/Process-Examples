@@ -21,8 +21,9 @@ def read_data():
         print("Error: The data file is corrupted or empty.")
         return []
     except Exception as e:
-        print(f"Unexpected error while reading data: {e}")
-        return []
+        import traceback
+        traceback.print_exc()
+        return render_template('form.html', message="An error occurred during data submission. Please try again.")
 
 # Function to write data to the JSON file
 def write_data(data):
