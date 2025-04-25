@@ -7,15 +7,16 @@ app = Flask(__name__)
 DATA_FILE = 'data.json'
 
 # Function to read data from the JSON file
-# Function to read data from the JSON file
 def read_data():
     if not os.path.exists(DATA_FILE):
         print(f"Warning: {DATA_FILE} not found, initializing empty list.")
         with open(DATA_FILE, 'w') as f:
             json.dump([], f)
         return []
-    with open(DATA_FILE, 'r') as f:
-        return json.load(f)
+    
+    try:
+        with open(DATA_FILE, 'r') as f:
+            return json.load(f)
     except FileNotFoundError:
         print(f"FileNotFoundError: {DATA_FILE} not found.")
         return []
