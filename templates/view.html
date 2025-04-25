@@ -1,54 +1,155 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Forming Process Submissions</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Submission</title>
+    <link rel="stylesheet" href="static/styles.css">
     <style>
         body {
-            background-color: #f4eee1;
             font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             padding: 20px;
         }
-        table {
+
+        .form-box {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
             width: 100%;
-            border-collapse: collapse;
-            background-color: #fff9ec;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        th, td {
-            border: 1px solid #c2b280;
+
+        h2 {
+            text-align: center;
+            color: #6d4c41;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
             padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .button {
+            width: 100%;
+            padding: 12px;
+            background-color: #6d4c41;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #5d4037;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
             text-align: center;
         }
-        th {
-            background-color: #d2b48c;
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
         }
-        td:last-child, th:last-child {
-            background-color: #e8d3b8;
+
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>Student Submissions</h1>
-    
-    {% if table_data %}
-    <table>
-        <tr>
-            {% for process in processes %}
-                <th>{{ process }}</th>
-            {% endfor %}
-            <th>SRN</th>
-        </tr>
 
-        {% for srn, answers in table_data.items() %}
-        <tr>
-            {% for process in processes %}
-                <td>{{ answers.get(process, "-") }}</td>
-            {% endfor %}
-            <td><strong>{{ srn }}</strong></td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% else %}
-    <p>No submissions yet.</p>
-    {% endif %}
+<div class="container">
+    <div class="form-box">
+        <h2>Submit Form</h2>
+
+        <!-- Display error or success message -->
+        {% if message %}
+            <div class="{% if 'Repeated' in message %}error-message{% else %}success-message{% endif %}">
+                {{ message }}
+            </div>
+        {% endif %}
+
+        <form action="/" method="POST">
+            <div class="form-group">
+                <label for="srn">SRN:</label>
+                <input type="text" id="srn" name="srn" required>
+            </div>
+
+            <div class="form-group">
+                <label for="material0">Material 1:</label>
+                <input type="text" id="material0" name="material0" required>
+            </div>
+            <div class="form-group">
+                <label for="product0">Product 1:</label>
+                <input type="text" id="product0" name="product0" required>
+            </div>
+
+            <div class="form-group">
+                <label for="material1">Material 2:</label>
+                <input type="text" id="material1" name="material1" required>
+            </div>
+            <div class="form-group">
+                <label for="product1">Product 2:</label>
+                <input type="text" id="product1" name="product1" required>
+            </div>
+
+            <!-- Repeat for other materials/products (add more fields if needed) -->
+            <div class="form-group">
+                <label for="material2">Material 3:</label>
+                <input type="text" id="material2" name="material2" required>
+            </div>
+            <div class="form-group">
+                <label for="product2">Product 3:</label>
+                <input type="text" id="product2" name="product2" required>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="button">Submit</button>
+        </form>
+
+        <div class="form-footer">
+            <p><a href="/view" style="color: #6d4c41;">View All Submissions</a></p>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
