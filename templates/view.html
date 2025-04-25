@@ -2,28 +2,98 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Submissions</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>View Submissions</title>
+    <style>
+        body {
+            background-color: #4e342e; /* brown theme */
+            color: #f5f5dc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #ffe0b2;
+            margin-bottom: 30px;
+        }
+
+        .srn-section {
+            margin-bottom: 40px;
+            border: 1px solid #8d6e63;
+            border-radius: 10px;
+            padding: 15px;
+            background-color: #5d4037;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .srn-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #ffccbc;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background-color: #6d4c41;
+        }
+
+        th, td {
+            border: 1px solid #d7ccc8;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #a1887f;
+            color: #ffffff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #4e342e;
+        }
+
+        .message {
+            color: #ffccbc;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h2>All Submissions</h2>
-    {% for srn, entries in data.items() %}
-        <h3>{{ srn }}</h3>
-        <table>
-            <tr>
-                <th>Process</th>
-                <th>Material</th>
-                <th>Product</th>
-            </tr>
-            {% for entry in entries %}
-            <tr>
-                <td>{{ entry.process }}</td>
-                <td>{{ entry.material }}</td>
-                <td>{{ entry.product }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-        <br>
-    {% endfor %}
+    <h1>Submitted Data</h1>
+
+    {% if message %}
+        <p class="message">{{ message }}</p>
+    {% endif %}
+
+    {% if data %}
+        {% for entry in data %}
+            <div class="srn-section">
+                <div class="srn-title"><strong>SRN:</strong> {{ entry.srn }}</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Forming Process</th>
+                            <th>Material</th>
+                            <th>Product</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in entry.processes %}
+                        <tr>
+                            <td>{{ p.process }}</td>
+                            <td>{{ p.material }}</td>
+                            <td>{{ p.product }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="message">No submissions yet.</p>
+    {% endif %}
 </body>
 </html>
