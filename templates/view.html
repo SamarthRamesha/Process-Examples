@@ -2,86 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>View Submissions</title>
+    <title>Submitted Answers</title>
     <style>
         body {
-            background-color: #4e342e; /* brown theme */
-            color: #f5f5dc;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
+            background-color: #2e1f0f;
+            color: #fff8f0;
+            font-family: Arial, sans-serif;
+            padding: 2rem;
         }
-
-        h1 {
-            color: #ffe0b2;
-            margin-bottom: 30px;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #4e342e;
         }
-
-        .container {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 20px;
+        th, td {
+            border: 1px solid #a1887f;
+            padding: 0.75rem;
+            text-align: center;
         }
-
-        .srn-column {
-            border: 1px solid #8d6e63;
-            border-radius: 10px;
-            padding: 15px;
+        th {
+            background-color: #6d4c41;
+        }
+        td {
             background-color: #5d4037;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            width: 250px;
-            margin-bottom: 20px;
         }
-
-        .srn-header {
-            font-size: 1.2rem;
-            color: #ffccbc;
-            margin-bottom: 10px;
-        }
-
-        .process-list {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .process-item {
-            margin-bottom: 10px;
-        }
-
-        .message {
-            color: #ffccbc;
-            font-size: 1rem;
-            margin-top: 20px;
+        tr:nth-child(even) td {
+            background-color: #4e342e;
         }
     </style>
 </head>
 <body>
-    <h1>Submitted Data</h1>
-
-    {% if message %}
-        <p class="message">{{ message }}</p>
-    {% endif %}
-
-    {% if data %}
-        <div class="container">
-            {% for entry in data %}
-                <div class="srn-column">
-                    <div class="srn-header"><strong>SRN:</strong> {{ entry.srn }}</div>
-                    <ul class="process-list">
-                        {% for p in entry.processes %}
-                            <li class="process-item">
-                                <strong>{{ p.process }}:</strong> 
-                                <span><strong>Material:</strong> {{ p.material }}</span>, 
-                                <span><strong>Product:</strong> {{ p.product }}</span>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
+    <h1>Submitted Answers</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>SRN</th>
+                {% for process in processes %}
+                    <th>{{ process }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for srn, answers in submissions.items() %}
+                <tr>
+                    <td>{{ srn }}</td>
+                    {% for process in processes %}
+                        <td>{{ answers.get(process, "—") }}</td>
+                    {% endfor %}
+                </tr>
             {% endfor %}
-        </div>
-    {% else %}
-        <p class="message">No submissions yet.</p>
-    {% endif %}
+        </tbody>
+    </table>
 </body>
 </html>
