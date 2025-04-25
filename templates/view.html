@@ -17,41 +17,36 @@
             margin-bottom: 30px;
         }
 
-        .srn-section {
-            margin-bottom: 40px;
+        .container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .srn-column {
             border: 1px solid #8d6e63;
             border-radius: 10px;
             padding: 15px;
             background-color: #5d4037;
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            width: 250px;
+            margin-bottom: 20px;
         }
 
-        .srn-title {
+        .srn-header {
             font-size: 1.2rem;
-            margin-bottom: 10px;
             color: #ffccbc;
+            margin-bottom: 10px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-            background-color: #6d4c41;
+        .process-list {
+            list-style-type: none;
+            padding: 0;
         }
 
-        th, td {
-            border: 1px solid #d7ccc8;
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #a1887f;
-            color: #ffffff;
-        }
-
-        tr:nth-child(even) {
-            background-color: #4e342e;
+        .process-item {
+            margin-bottom: 10px;
         }
 
         .message {
@@ -69,29 +64,22 @@
     {% endif %}
 
     {% if data %}
-        {% for entry in data %}
-            <div class="srn-section">
-                <div class="srn-title"><strong>SRN:</strong> {{ entry.srn }}</div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Forming Process</th>
-                            <th>Material</th>
-                            <th>Product</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+        <div class="container">
+            {% for entry in data %}
+                <div class="srn-column">
+                    <div class="srn-header"><strong>SRN:</strong> {{ entry.srn }}</div>
+                    <ul class="process-list">
                         {% for p in entry.processes %}
-                        <tr>
-                            <td>{{ p.process }}</td>
-                            <td>{{ p.material }}</td>
-                            <td>{{ p.product }}</td>
-                        </tr>
+                            <li class="process-item">
+                                <strong>{{ p.process }}:</strong> 
+                                <span><strong>Material:</strong> {{ p.material }}</span>, 
+                                <span><strong>Product:</strong> {{ p.product }}</span>
+                            </li>
                         {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
     {% else %}
         <p class="message">No submissions yet.</p>
     {% endif %}
