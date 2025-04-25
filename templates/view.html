@@ -17,7 +17,7 @@
         .container {
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             min-height: 100vh;
             padding: 20px;
         }
@@ -27,7 +27,7 @@
             border-radius: 8px;
             padding: 20px;
             width: 100%;
-            max-width: 600px;
+            max-width: 700px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
@@ -52,6 +52,16 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 14px;
+        }
+
+        .field-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .field-group div {
+            width: 48%;
         }
 
         .button {
@@ -113,32 +123,84 @@
                 <input type="text" id="srn" name="srn" required>
             </div>
 
-            <div class="form-group">
-                <label for="material0">Material 1:</label>
-                <input type="text" id="material0" name="material0" required>
-            </div>
-            <div class="form-group">
-                <label for="product0">Product 1:</label>
-                <input type="text" id="product0" name="product0" required>
-            </div>
-
-            <div class="form-group">
-                <label for="material1">Material 2:</label>
-                <input type="text" id="material1" name="material1" required>
-            </div>
-            <div class="form-group">
-                <label for="product1">Product 2:</label>
-                <input type="text" id="product1" name="product1" required>
+            <!-- Materials and Products Section -->
+            <h3>Processes</h3>
+            
+            <div class="field-group">
+                <div class="form-group">
+                    <label for="material0">Material 1:</label>
+                    <input type="text" id="material0" name="material0" required>
+                </div>
+                <div class="form-group">
+                    <label for="product0">Product 1:</label>
+                    <input type="text" id="product0" name="product0" required>
+                </div>
             </div>
 
-            <!-- Repeat for other materials/products (add more fields if needed) -->
-            <div class="form-group">
-                <label for="material2">Material 3:</label>
-                <input type="text" id="material2" name="material2" required>
+            <div class="field-group">
+                <div class="form-group">
+                    <label for="material1">Material 2:</label>
+                    <input type="text" id="material1" name="material1" required>
+                </div>
+                <div class="form-group">
+                    <label for="product1">Product 2:</label>
+                    <input type="text" id="product1" name="product1" required>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="product2">Product 3:</label>
-                <input type="text" id="product2" name="product2" required>
+
+            <div class="field-group">
+                <div class="form-group">
+                    <label for="material2">Material 3:</label>
+                    <input type="text" id="material2" name="material2" required>
+                </div>
+                <div class="form-group">
+                    <label for="product2">Product 3:</label>
+                    <input type="text" id="product2" name="product2" required>
+                </div>
+            </div>
+
+            <div class="field-group">
+                <div class="form-group">
+                    <label for="material3">Material 4:</label>
+                    <input type="text" id="material3" name="material3" required>
+                </div>
+                <div class="form-group">
+                    <label for="product3">Product 4:</label>
+                    <input type="text" id="product3" name="product3" required>
+                </div>
+            </div>
+
+            <div class="field-group">
+                <div class="form-group">
+                    <label for="material4">Material 5:</label>
+                    <input type="text" id="material4" name="material4" required>
+                </div>
+                <div class="form-group">
+                    <label for="product4">Product 5:</label>
+                    <input type="text" id="product4" name="product4" required>
+                </div>
+            </div>
+
+            <div class="field-group">
+                <div class="form-group">
+                    <label for="material5">Material 6:</label>
+                    <input type="text" id="material5" name="material5" required>
+                </div>
+                <div class="form-group">
+                    <label for="product5">Product 6:</label>
+                    <input type="text" id="product5" name="product5" required>
+                </div>
+            </div>
+
+            <div class="field-group">
+                <div class="form-group">
+                    <label for="material6">Material 7:</label>
+                    <input type="text" id="material6" name="material6" required>
+                </div>
+                <div class="form-group">
+                    <label for="product6">Product 7:</label>
+                    <input type="text" id="product6" name="product6" required>
+                </div>
             </div>
 
             <!-- Submit Button -->
