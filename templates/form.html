@@ -14,14 +14,16 @@
         }
 
         .container {
-            width: 90%;
+            width: 80%;
             margin: 0 auto;
-            padding: 20px;
+            padding: 30px 0;
         }
 
         h2 {
             text-align: center;
             color: #6d4c41;
+            margin-bottom: 20px;
+            font-size: 24px;
         }
 
         .form-group {
@@ -31,28 +33,47 @@
         .form-group label {
             font-size: 18px;
             margin-right: 10px;
+            display: block;
+            color: #333;
         }
 
         .form-group input {
-            width: calc(50% - 10px);
-            padding: 10px;
+            width: 100%;
+            padding: 12px;
             font-size: 16px;
-        }
-
-        .form-group div {
-            display: flex;
-            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 8px;
         }
 
         .process-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
         }
 
         .process-item {
-            margin: 10px;
-            width: 48%;
+            background-color: #fff;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .process-item label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .process-item input {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
         }
 
         .message {
@@ -66,14 +87,23 @@
             background-color: #6d4c41;
             color: white;
             border: none;
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 12px 20px;
+            font-size: 18px;
             cursor: pointer;
             width: 100%;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
 
         button:hover {
             background-color: #4e342e;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .process-list {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -96,7 +126,7 @@
             <div class="process-list">
                 {% set processes = ['Rolling', 'Drop Forging', 'Press Forging', 'Upset Forging', 'Extrusion', 'Wire Drawing', 'Sheet Drawing'] %}
                 
-                {% for process in processes %}
+                {% for i, process in processes %}
                 <div class="process-item">
                     <label for="material{{ loop.index }}">Material for {{ process }}</label>
                     <input type="text" id="material{{ loop.index }}" name="material{{ loop.index }}" required>
