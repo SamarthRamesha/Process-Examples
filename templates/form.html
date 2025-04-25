@@ -1,47 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forming Processes Submission</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Submit Forming Process Data</title>
     <style>
-        body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 20px; }
-        table { width: 100%; border-spacing: 10px; }
-        th, td { text-align: left; padding: 6px; }
-        input { width: 100%; padding: 6px; }
-        .error { color: red; }
+        body {
+            background-color: #f4eee1;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            background-color: #fff9ec;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 800px;
+            margin: auto;
+        }
+        label, input {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .process-block {
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #d2b48c;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .message {
+            margin-bottom: 15px;
+            color: green;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <h2>Forming Process Examples</h2>
-    {% if message %}
-        <p class="error">{{ message }}</p>
-    {% endif %}
-    <form method="POST">
-        <label for="srn">SRN:</label><br>
-        <input type="text" id="srn" name="srn" required><br><br>
+    <div class="container">
+        <h1>Form Submission</h1>
+        
+        {% if message %}
+            <div class="message">{{ message }}</div>
+        {% endif %}
 
-        <table>
-            <tr>
-                <th>Forming Process</th>
-                <th>Material</th>
-                <th>Product</th>
-            </tr>
-            {% set processes = [
-                'Rolling', 'Drop Forging', 'Press Forging', 'Upset Forging',
-                'Extrusion', 'Wire Drawing', 'Sheet Drawing'
-            ] %}
-            {% for i in range(7) %}
-            <tr>
-                <td>{{ processes[i] }}</td>
-                <td><input type="text" name="material{{ i }}" required></td>
-                <td><input type="text" name="product{{ i }}" required></td>
-            </tr>
+        <form method="POST" action="/">
+            <label for="srn">Student SRN:</label>
+            <input type="text" id="srn" name="srn" required>
+
+            {% set processes = ['Rolling', 'Drop Forging', 'Press Forging', 'Upset Forging', 'Extrusion', 'Wire Drawing', 'Sheet Drawing'] %}
+
+            {% for i in range(processes | length) %}
+            <div class="process-block">
+                <strong>{{ processes[i] }}</strong><br>
+                <label>Material:</label>
+                <input type="text" name="material{{ i }}" required>
+                <label>Product:</label>
+                <input type="text" name="product{{ i }}" required>
+            </div>
             {% endfor %}
-        </table>
-        <br>
-        <button type="submit">Submit</button>
-    </form>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 </body>
 </html>
