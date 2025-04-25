@@ -48,17 +48,61 @@
             <label for="srn">Student SRN:</label>
             <input type="text" id="srn" name="srn" required>
 
-            {% set processes = ['Rolling', 'Drop Forging', 'Press Forging', 'Upset Forging', 'Extrusion', 'Wire Drawing', 'Sheet Drawing'] %}
-
-            {% for i in range(processes | length) %}
             <div class="process-block">
-                <strong>{{ processes[i] }}</strong><br>
+                <strong>Rolling</strong><br>
                 <label>Material:</label>
-                <input type="text" name="material{{ i }}" required>
+                <input type="text" name="material0" required>
                 <label>Product:</label>
-                <input type="text" name="product{{ i }}" required>
+                <input type="text" name="product0" required>
             </div>
-            {% endfor %}
+
+            <div class="process-block">
+                <strong>Drop Forging</strong><br>
+                <label>Material:</label>
+                <input type="text" name="material1" required>
+                <label>Product:</label>
+                <input type="text" name="product1" required>
+            </div>
+
+            <div class="process-block">
+                <strong>Press Forging</strong><br>
+                <label>Material:</label>
+                <input type="text" name="material2" required>
+                <label>Product:</label>
+                <input type="text" name="product2" required>
+            </div>
+
+            <div class="process-block">
+                <strong>Upset Forging</strong><br>
+                <label>Material:</label>
+                <input type="text" name="material3" required>
+                <label>Product:</label>
+                <input type="text" name="product3" required>
+            </div>
+
+            <div class="process-block">
+                <strong>Extrusion</strong><br>
+                <label>Material:</label>
+                <input type="text" name="material4" required>
+                <label>Product:</label>
+                <input type="text" name="product4" required>
+            </div>
+
+            <div class="process-block">
+                <strong>Wire Drawing</strong><br>
+                <label>Material:</label>
+                <input type="text" name="material5" required>
+                <label>Product:</label>
+                <input type="text" name="product5" required>
+            </div>
+
+            <div class="process-block">
+                <strong>Sheet Drawing</strong><br>
+                <label>Material:</label>
+                <input type="text" name="material6" required>
+                <label>Product:</label>
+                <input type="text" name="product6" required>
+            </div>
 
             <button type="submit">Submit</button>
         </form>
