@@ -46,6 +46,7 @@
 
         .process-list {
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
         }
 
@@ -95,7 +96,7 @@
             <div class="process-list">
                 {% set processes = ['Rolling', 'Drop Forging', 'Press Forging', 'Upset Forging', 'Extrusion', 'Wire Drawing', 'Sheet Drawing'] %}
                 
-                {% for i, process in processes %}
+                {% for process in processes %}
                 <div class="process-item">
                     <label for="material{{ loop.index }}">Material for {{ process }}</label>
                     <input type="text" id="material{{ loop.index }}" name="material{{ loop.index }}" required>
