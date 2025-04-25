@@ -42,8 +42,8 @@ def index():
     if request.method == "POST":
         try:
             srn = request.form['srn']
-            materials = [request.form[f'material{i}'] for i in range(7)]
-            products = [request.form[f'product{i}'] for i in range(7)]
+            materials = [request.form[f'material{i}'] for i in range(1, 8)]
+            products = [request.form[f'product{i}'] for i in range(1, 8)]
             
             # Read existing data
             data = read_data()
