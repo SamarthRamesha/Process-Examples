@@ -77,23 +77,23 @@ def index():
 @app.route("/view")
 def view():
     try:
-        # Read the data
         data = read_data()
-        
-        # Flatten the structure to pass to the template
-        # This makes it easier to display as rows per SRN
-        structured_data = []
+
+        # Get list of processes from the first entry (assuming all entries follow the same order)
+        if data:
+            processes = [p['process'] for p in data[0]['processes']]
+        else:
+            processes = []
+
+        # Build a dictionary like: table_data[srn][process] = "Material / Product"
+        table_data = {}
         for entry in data:
             srn = entry['srn']
-            for process_entry in entry['processes']:
-                structured_data.append({
-                    'srn': srn,
-                    'process': process_entry['process'],
-                    'material': process_entry['material'],
-                    'product': process_entry['product']
-                })
+            table_data[srn] = {}
+            for p in entry['processes']:
+                table_data[srn][p['process']] = f"{p['material']} / {p['product']}"
 
-        return render_template('view.html', data=structured_data)
+        return render_template('view.html', processes=processes, table_data=table_data)
 
     except Exception as e:
         print(f"Error while reading data for viewing: {e}")
