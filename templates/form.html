@@ -7,218 +7,107 @@
     <link rel="stylesheet" href="static/styles.css">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             background-color: #f4f4f9;
-            color: #333;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
         }
 
-        .form-box {
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 30px;
-            width: 100%;
-            max-width: 600px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 20px;
+        .container {
+            width: 90%;
+            margin: 0 auto;
+            padding: 20px;
         }
 
         h2 {
             text-align: center;
             color: #6d4c41;
-            font-size: 24px;
-            margin-bottom: 20px;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-            color: #6d4c41;
+        .form-group label {
+            font-size: 18px;
+            margin-right: 10px;
         }
 
-        input[type="text"] {
-            width: 100%;
+        .form-group input {
+            width: calc(50% - 10px);
             padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
+            font-size: 16px;
         }
 
-        .field-group {
+        .form-group div {
+            display: flex;
+            align-items: center;
+        }
+
+        .process-list {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 15px;
         }
 
-        .field-group div {
+        .process-item {
+            margin: 10px;
             width: 48%;
         }
 
-        .button {
-            width: 100%;
-            padding: 12px;
-            background-color: #6d4c41;
-            border: none;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-
-        .button:hover {
-            background-color: #5d4037;
-        }
-
-        .error-message, .success-message {
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+        .message {
             text-align: center;
-        }
-
-        .error-message {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-
-        .success-message {
-            background-color: #d4edda;
-            color: #155724;
-        }
-
-        .form-footer {
-            text-align: center;
+            font-size: 18px;
+            color: #ff0000;
             margin-top: 20px;
         }
 
-        a {
-            color: #6d4c41;
-            text-decoration: none;
-            font-weight: bold;
+        button {
+            background-color: #6d4c41;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
         }
 
-        a:hover {
-            color: #5d4037;
+        button:hover {
+            background-color: #4e342e;
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h2>Enter Data for Forming Processes</h2>
 
-<div class="form-box">
-    <h2>Submit Form</h2>
+        {% if message %}
+        <div class="message">{{ message }}</div>
+        {% endif %}
 
-    <!-- Display error or success message -->
-    {% if message %}
-        <div class="{% if 'Repeated' in message %}error-message{% else %}success-message{% endif %}">
-            {{ message }}
-        </div>
-    {% endif %}
+        <form method="POST">
+            <!-- SRN Input -->
+            <div class="form-group">
+                <label for="srn">SRN</label>
+                <input type="text" id="srn" name="srn" required>
+            </div>
 
-    <form action="/" method="POST">
-        <div class="form-group">
-            <label for="srn">SRN:</label>
-            <input type="text" id="srn" name="srn" required>
-        </div>
+            <!-- Process, Material, and Product Input -->
+            <div class="process-list">
+                {% set processes = ['Rolling', 'Drop Forging', 'Press Forging', 'Upset Forging', 'Extrusion', 'Wire Drawing', 'Sheet Drawing'] %}
+                
+                {% for i, process in processes %}
+                <div class="process-item">
+                    <label for="material{{ loop.index }}">Material for {{ process }}</label>
+                    <input type="text" id="material{{ loop.index }}" name="material{{ loop.index }}" required>
 
-        <h3>Processes</h3>
+                    <label for="product{{ loop.index }}">Product for {{ process }}</label>
+                    <input type="text" id="product{{ loop.index }}" name="product{{ loop.index }}" required>
+                </div>
+                {% endfor %}
+            </div>
 
-        <!-- Materials and Products Section -->
-        <div class="field-group">
-            <div class="form-group">
-                <label for="material0">Material 1:</label>
-                <input type="text" id="material0" name="material0" required>
-            </div>
-            <div class="form-group">
-                <label for="product0">Product 1:</label>
-                <input type="text" id="product0" name="product0" required>
-            </div>
-        </div>
-
-        <div class="field-group">
-            <div class="form-group">
-                <label for="material1">Material 2:</label>
-                <input type="text" id="material1" name="material1" required>
-            </div>
-            <div class="form-group">
-                <label for="product1">Product 2:</label>
-                <input type="text" id="product1" name="product1" required>
-            </div>
-        </div>
-
-        <div class="field-group">
-            <div class="form-group">
-                <label for="material2">Material 3:</label>
-                <input type="text" id="material2" name="material2" required>
-            </div>
-            <div class="form-group">
-                <label for="product2">Product 3:</label>
-                <input type="text" id="product2" name="product2" required>
-            </div>
-        </div>
-
-        <div class="field-group">
-            <div class="form-group">
-                <label for="material3">Material 4:</label>
-                <input type="text" id="material3" name="material3" required>
-            </div>
-            <div class="form-group">
-                <label for="product3">Product 4:</label>
-                <input type="text" id="product3" name="product3" required>
-            </div>
-        </div>
-
-        <div class="field-group">
-            <div class="form-group">
-                <label for="material4">Material 5:</label>
-                <input type="text" id="material4" name="material4" required>
-            </div>
-            <div class="form-group">
-                <label for="product4">Product 5:</label>
-                <input type="text" id="product4" name="product4" required>
-            </div>
-        </div>
-
-        <div class="field-group">
-            <div class="form-group">
-                <label for="material5">Material 6:</label>
-                <input type="text" id="material5" name="material5" required>
-            </div>
-            <div class="form-group">
-                <label for="product5">Product 6:</label>
-                <input type="text" id="product5" name="product5" required>
-            </div>
-        </div>
-
-        <div class="field-group">
-            <div class="form-group">
-                <label for="material6">Material 7:</label>
-                <input type="text" id="material6" name="material6" required>
-            </div>
-            <div class="form-group">
-                <label for="product6">Product 7:</label>
-                <input type="text" id="product6" name="product6" required>
-            </div>
-        </div>
-
-        <!-- Submit Button -->
-        <button type="submit" class="button">Submit</button>
-    </form>
-
-    <div class="form-footer">
-        <p><a href="/view">View All Submissions</a></p>
+            <button type="submit">Submit</button>
+        </form>
     </div>
-</div>
-
 </body>
 </html>
