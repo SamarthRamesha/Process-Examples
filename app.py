@@ -62,12 +62,25 @@ def index():
                     existing_products.add(process['product'].strip().lower())
 
             # Normalize the new materials/products to check against existing ones
+            repeated_materials = []
+            repeated_products = []
+            
             for m in materials:
                 if m.strip().lower() in existing_materials:
-                    return render_template('form.html', message=f"The material '{m}' has already been used. Please enter unique values.")
+                    repeated_materials.append(m)
+            
             for p in products:
                 if p.strip().lower() in existing_products:
-                    return render_template('form.html', message=f"The product '{p}' has already been used. Please enter unique values.")
+                    repeated_products.append(p)
+            
+            # Show all repeated values at once
+            if repeated_materials or repeated_products:
+                msg_parts = []
+                if repeated_materials:
+                    msg_parts.append("Repeated materials: " + ", ".join(repeated_materials))
+                if repeated_products:
+                    msg_parts.append("Repeated products: " + ", ".join(repeated_products))
+                return render_template('form.html', message=" | ".join(msg_parts))
 
             # Append the new entry
             new_entry = {
