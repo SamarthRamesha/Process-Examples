@@ -1,111 +1,224 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Submit Forming Process Data</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Submission</title>
+    <link rel="stylesheet" href="static/styles.css">
     <style>
         body {
-            background-color: #f4eee1;
-            font-family: Arial, sans-serif;
-            padding: 20px;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-        .container {
-            background-color: #fff9ec;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 800px;
-            margin: auto;
+
+        .form-box {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px;
         }
-        label, input {
-            display: block;
-            margin-bottom: 10px;
-        }
-        .process-block {
+
+        h2 {
+            text-align: center;
+            color: #6d4c41;
+            font-size: 24px;
             margin-bottom: 20px;
         }
-        button {
-            padding: 10px 15px;
-            background-color: #d2b48c;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .message {
+
+        .form-group {
             margin-bottom: 15px;
-            color: green;
+        }
+
+        label {
             font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #6d4c41;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .field-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .field-group div {
+            width: 48%;
+        }
+
+        .button {
+            width: 100%;
+            padding: 12px;
+            background-color: #6d4c41;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #5d4037;
+        }
+
+        .error-message, .success-message {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        a {
+            color: #6d4c41;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #5d4037;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Form Submission</h1>
-        
-        {% if message %}
-            <div class="message">{{ message }}</div>
-        {% endif %}
 
-        <form method="POST" action="/">
-            <label for="srn">Student SRN:</label>
+<div class="form-box">
+    <h2>Submit Form</h2>
+
+    <!-- Display error or success message -->
+    {% if message %}
+        <div class="{% if 'Repeated' in message %}error-message{% else %}success-message{% endif %}">
+            {{ message }}
+        </div>
+    {% endif %}
+
+    <form action="/" method="POST">
+        <div class="form-group">
+            <label for="srn">SRN:</label>
             <input type="text" id="srn" name="srn" required>
+        </div>
 
-            <div class="process-block">
-                <strong>Rolling</strong><br>
-                <label>Material:</label>
-                <input type="text" name="material0" required>
-                <label>Product:</label>
-                <input type="text" name="product0" required>
+        <h3>Processes</h3>
+
+        <!-- Materials and Products Section -->
+        <div class="field-group">
+            <div class="form-group">
+                <label for="material0">Material 1:</label>
+                <input type="text" id="material0" name="material0" required>
             </div>
-
-            <div class="process-block">
-                <strong>Drop Forging</strong><br>
-                <label>Material:</label>
-                <input type="text" name="material1" required>
-                <label>Product:</label>
-                <input type="text" name="product1" required>
+            <div class="form-group">
+                <label for="product0">Product 1:</label>
+                <input type="text" id="product0" name="product0" required>
             </div>
+        </div>
 
-            <div class="process-block">
-                <strong>Press Forging</strong><br>
-                <label>Material:</label>
-                <input type="text" name="material2" required>
-                <label>Product:</label>
-                <input type="text" name="product2" required>
+        <div class="field-group">
+            <div class="form-group">
+                <label for="material1">Material 2:</label>
+                <input type="text" id="material1" name="material1" required>
             </div>
-
-            <div class="process-block">
-                <strong>Upset Forging</strong><br>
-                <label>Material:</label>
-                <input type="text" name="material3" required>
-                <label>Product:</label>
-                <input type="text" name="product3" required>
+            <div class="form-group">
+                <label for="product1">Product 2:</label>
+                <input type="text" id="product1" name="product1" required>
             </div>
+        </div>
 
-            <div class="process-block">
-                <strong>Extrusion</strong><br>
-                <label>Material:</label>
-                <input type="text" name="material4" required>
-                <label>Product:</label>
-                <input type="text" name="product4" required>
+        <div class="field-group">
+            <div class="form-group">
+                <label for="material2">Material 3:</label>
+                <input type="text" id="material2" name="material2" required>
             </div>
-
-            <div class="process-block">
-                <strong>Wire Drawing</strong><br>
-                <label>Material:</label>
-                <input type="text" name="material5" required>
-                <label>Product:</label>
-                <input type="text" name="product5" required>
+            <div class="form-group">
+                <label for="product2">Product 3:</label>
+                <input type="text" id="product2" name="product2" required>
             </div>
+        </div>
 
-            <div class="process-block">
-                <strong>Sheet Drawing</strong><br>
-                <label>Material:</label>
-                <input type="text" name="material6" required>
-                <label>Product:</label>
-                <input type="text" name="product6" required>
+        <div class="field-group">
+            <div class="form-group">
+                <label for="material3">Material 4:</label>
+                <input type="text" id="material3" name="material3" required>
             </div>
+            <div class="form-group">
+                <label for="product3">Product 4:</label>
+                <input type="text" id="product3" name="product3" required>
+            </div>
+        </div>
 
-            <button type="submit">Submit</button>
-        </form>
+        <div class="field-group">
+            <div class="form-group">
+                <label for="material4">Material 5:</label>
+                <input type="text" id="material4" name="material4" required>
+            </div>
+            <div class="form-group">
+                <label for="product4">Product 5:</label>
+                <input type="text" id="product4" name="product4" required>
+            </div>
+        </div>
+
+        <div class="field-group">
+            <div class="form-group">
+                <label for="material5">Material 6:</label>
+                <input type="text" id="material5" name="material5" required>
+            </div>
+            <div class="form-group">
+                <label for="product5">Product 6:</label>
+                <input type="text" id="product5" name="product5" required>
+            </div>
+        </div>
+
+        <div class="field-group">
+            <div class="form-group">
+                <label for="material6">Material 7:</label>
+                <input type="text" id="material6" name="material6" required>
+            </div>
+            <div class="form-group">
+                <label for="product6">Product 7:</label>
+                <input type="text" id="product6" name="product6" required>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="button">Submit</button>
+    </form>
+
+    <div class="form-footer">
+        <p><a href="/view">View All Submissions</a></p>
     </div>
+</div>
+
 </body>
 </html>
