@@ -49,9 +49,25 @@ def index():
             data = read_data()
 
             # Check for duplicate SRN
-            if any(entry['srn'] == srn for entry in data):
-                print(f"Duplicate SRN: {srn}")
-                return render_template('form.html', message="This SRN has already been entered. Please enter new data.")
+if any(entry['srn'] == srn for entry in data):
+    print(f"Duplicate SRN: {srn}")
+    return render_template('form.html', message="This SRN has already been entered. Please enter new data.")
+
+# Check for duplicate materials or products across all entries
+existing_materials = set()
+existing_products = set()
+for entry in data:
+    for process in entry['processes']:
+        existing_materials.add(process['material'].strip().lower())
+        existing_products.add(process['product'].strip().lower())
+
+# Normalize the new materials/products to check against existing ones
+for m in materials:
+    if m.strip().lower() in existing_materials:
+        return render_template('form.html', message=f"The material '{m}' has already been used. Please enter unique values.")
+for p in products:
+    if p.strip().lower() in existing_products:
+        return render_template('form.html', message=f"The product '{p}' has already been used. Please enter unique values.")
 
             # Append the new entry
             new_entry = {
