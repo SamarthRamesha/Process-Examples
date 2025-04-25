@@ -1,57 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Submitted Answers</title>
+    <title>Forming Process Submissions</title>
     <style>
         body {
-            background-color: #2e1f0f;
-            color: #fff8f0;
+            background-color: #f4eee1;
             font-family: Arial, sans-serif;
-            padding: 2rem;
+            padding: 20px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            background-color: #4e342e;
+            background-color: #fff9ec;
         }
         th, td {
-            border: 1px solid #a1887f;
-            padding: 0.75rem;
+            border: 1px solid #c2b280;
+            padding: 10px;
             text-align: center;
         }
         th {
-            background-color: #6d4c41;
+            background-color: #d2b48c;
         }
-        td {
-            background-color: #5d4037;
-        }
-        tr:nth-child(even) td {
-            background-color: #4e342e;
+        td:last-child, th:last-child {
+            background-color: #e8d3b8;
         }
     </style>
 </head>
 <body>
-    <h1>Submitted Answers</h1>
+    <h1>Student Submissions</h1>
+    
+    {% if table_data %}
     <table>
-        <thead>
-            <tr>
-                <th>SRN</th>
-                {% for process in processes %}
-                    <th>{{ process }}</th>
-                {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for srn, answers in submissions.items() %}
-                <tr>
-                    <td>{{ srn }}</td>
-                    {% for process in processes %}
-                        <td>{{ answers.get(process, "—") }}</td>
-                    {% endfor %}
-                </tr>
+        <tr>
+            {% for process in processes %}
+                <th>{{ process }}</th>
             {% endfor %}
-        </tbody>
+            <th>SRN</th>
+        </tr>
+
+        {% for srn, answers in table_data.items() %}
+        <tr>
+            {% for process in processes %}
+                <td>{{ answers.get(process, "-") }}</td>
+            {% endfor %}
+            <td><strong>{{ srn }}</strong></td>
+        </tr>
+        {% endfor %}
     </table>
+    {% else %}
+    <p>No submissions yet.</p>
+    {% endif %}
 </body>
 </html>
